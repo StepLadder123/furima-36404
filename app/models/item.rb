@@ -5,6 +5,7 @@ class Item < ApplicationRecord
   belongs_to :ship_fee
   belongs_to :ship_area
   belongs_to :ship_schedule
+  has_one_attached :image
 
   with_options presence: true do
     validates :name
