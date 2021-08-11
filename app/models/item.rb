@@ -1,6 +1,10 @@
 class Item < ApplicationRecord
   extend ActiveHash::Associations::ActiveRecordExtensions
-  belongs_to :item_choice
+  belongs_to :category
+  belongs_to :status
+  belongs_to :ship_fee
+  belongs_to :ship_area
+  belongs_to :ship_schedule
 
   with_options presence: true do
     validates :name
