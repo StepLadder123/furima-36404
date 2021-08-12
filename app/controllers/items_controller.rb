@@ -1,5 +1,5 @@
 class ItemsController < ApplicationController
-  before_action :move_to_signed_in, except: [:index]
+  before_action :move_to_signed_in, except: [:index, :show]
   
   def index
     @items = Item.includes(:user).order("created_at DESC")
@@ -18,6 +18,9 @@ class ItemsController < ApplicationController
     end
   end
 
+  def show
+    @item = Item.find(params[:id])
+  end
   private
   def move_to_signed_in
     unless user_signed_in?
