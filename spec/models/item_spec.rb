@@ -13,6 +13,9 @@ RSpec.describe Item, type: :model do
     
     context '商品出品できないとき' do
       it '商品画像を1枚つけることが必須であること' do
+        @item.image = nil
+        @item.valid?
+        expect(@item.errors.full_messages).to include("Image can't be blank")
       end
       
       it '商品名が必須であること' do
@@ -79,6 +82,18 @@ RSpec.describe Item, type: :model do
         @item.price = '１０'
         @item.valid?
         expect(@item.errors.full_messages).to include("Price is out of setting range")
+      end
+      
+      it '半角英数字混合では登録できないこと' do
+        @item.price = 'a1b2c3'
+        @item.valid?
+        expect(@item.errors.full_messages).to include("Price is out of setting range")
+      end
+
+      it 'ユーザーが紐付いていないと出品できない' do
+      @item.user = nil
+      @item.valid?
+      expect(@item.errors.full_messages).to include('User must exist')
       end
     end
   end
