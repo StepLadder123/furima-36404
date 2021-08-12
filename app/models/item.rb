@@ -9,7 +9,7 @@ class Item < ApplicationRecord
   has_one_attached :image
 
   with_options presence: true do
-    validates :image, unless: :was_attached?
+    validates :image
     validates :name
     validates :info
     validates :price, numericality: { only_integer: true, greater_than_or_equal_to: 300, less_than_or_equal_to: 9_999_999, message: "is out of setting range" }
@@ -21,11 +21,6 @@ class Item < ApplicationRecord
     validates :ship_fee_id
     validates :ship_area_id
     validates :ship_schedule_id
-  end
-
-
-  def was_attached?
-    self.image.attached?
   end
 
 end
