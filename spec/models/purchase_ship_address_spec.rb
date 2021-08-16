@@ -33,31 +33,37 @@ RSpec.describe PurchaseShipAddress, type: :model do
       it '郵便番号が7文字以下では登録できないこと' do
         @purchase_ship_address.postal_code = '123-567'
         @purchase_ship_address.valid?
-        expect(@purchase_ship_address.errors.full_messages).to include("Postal code is invalid. Input 8 characters (include hyphen(-)).")
+        expect(@purchase_ship_address.errors.full_messages).to include("Postal code is invalid. Input 8 half-width characters (include hyphen(-)).")
       end
       
       it '郵便番号が9文字以上では登録できないこと' do
         @purchase_ship_address.postal_code = '123-456789'
         @purchase_ship_address.valid?
-        expect(@purchase_ship_address.errors.full_messages).to include("Postal code is invalid. Input 8 characters (include hyphen(-)).")
+        expect(@purchase_ship_address.errors.full_messages).to include("Postal code is invalid. Input 8 half-width characters (include hyphen(-)).")
+      end
+      
+      it '郵便番号が全角では登録できないこと' do
+        @purchase_ship_address.postal_code = '１２３－４５６７'
+        @purchase_ship_address.valid?
+        expect(@purchase_ship_address.errors.full_messages).to include("Postal code is invalid. Input 8 half-width characters (include hyphen(-)).")
       end
       
       it '郵便番号の4文字目が「-」であること' do
         @purchase_ship_address.postal_code = '12345678'
         @purchase_ship_address.valid?
-        expect(@purchase_ship_address.errors.full_messages).to include("Postal code is invalid. Input 8 characters (include hyphen(-)).")
+        expect(@purchase_ship_address.errors.full_messages).to include("Postal code is invalid. Input 8 half-width characters (include hyphen(-)).")
       end
       
       it '郵便番号の先頭3文字が半角数字であること' do
         @purchase_ship_address.postal_code = '12-34567'
         @purchase_ship_address.valid?
-        expect(@purchase_ship_address.errors.full_messages).to include("Postal code is invalid. Input 8 characters (include hyphen(-)).")
+        expect(@purchase_ship_address.errors.full_messages).to include("Postal code is invalid. Input 8 half-width characters (include hyphen(-)).")
       end
       
       it '郵便番号の末尾4文字が半角数字であること' do
         @purchase_ship_address.postal_code = '1234-567'
         @purchase_ship_address.valid?
-        expect(@purchase_ship_address.errors.full_messages).to include("Postal code is invalid. Input 8 characters (include hyphen(-)).")
+        expect(@purchase_ship_address.errors.full_messages).to include("Postal code is invalid. Input 8 half-width characters (include hyphen(-)).")
       end
       
       it '配送先都道府県の情報のidが初期値でないこと' do
@@ -87,22 +93,26 @@ RSpec.describe PurchaseShipAddress, type: :model do
       it '電話番号が9文字以下では登録できないこと' do
         @purchase_ship_address.phone_number = '012345678'
         @purchase_ship_address.valid?
-        expect(@purchase_ship_address.errors.full_messages).to include("Phone number is invalid. Input 10 or 11 characters (not include hyphen(-)).")
+        expect(@purchase_ship_address.errors.full_messages).to include("Phone number is invalid. Input 10 or 11 half-width characters (not include hyphen(-)).")
       end
       
       it '電話番号が12文字以上では登録できないこと' do
         @purchase_ship_address.phone_number = '012345678901'
         @purchase_ship_address.valid?
-        expect(@purchase_ship_address.errors.full_messages).to include("Phone number is invalid. Input 10 or 11 characters (not include hyphen(-)).")
+        expect(@purchase_ship_address.errors.full_messages).to include("Phone number is invalid. Input 10 or 11 half-width characters (not include hyphen(-)).")
       end
       
+      it '電話番号が全角では登録できないこと' do
+        @purchase_ship_address.phone_number = '０１２３４５６７８９'
+        @purchase_ship_address.valid?
+        expect(@purchase_ship_address.errors.full_messages).to include("Phone number is invalid. Input 10 or 11 half-width characters (not include hyphen(-)).")
+      end
+
       it '電話番号に数字以外の文字があると登録できないこと' do
         @purchase_ship_address.phone_number = '012-3456789'
         @purchase_ship_address.valid?
-        expect(@purchase_ship_address.errors.full_messages).to include("Phone number is invalid. Input 10 or 11 characters (not include hyphen(-)).")
-      end
-      
-
+        expect(@purchase_ship_address.errors.full_messages).to include("Phone number is invalid. Input 10 or 11 half-width characters (not include hyphen(-)).")
+      end  
     end
   end
 end
