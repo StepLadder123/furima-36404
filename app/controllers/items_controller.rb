@@ -2,6 +2,7 @@ class ItemsController < ApplicationController
   before_action :set_item, only: [:edit, :show, :update, :destroy]
   before_action :move_to_signed_in, except: [:index, :show]
   before_action :move_to_index, only: [:edit, :update, :destroy]
+  before_action :sold_out_item, only: [:edit, :update, :destroy]
   
   def index
     @items = Item.includes(:user).order("created_at DESC")
@@ -59,5 +60,11 @@ class ItemsController < ApplicationController
 
   def item_params
     params.require(:item).permit(:image, :name, :info, :category_id, :status_id, :ship_fee_id, :ship_area_id, :ship_schedule_id, :price).merge(user_id: current_user.id)
+  end
+
+  def sold_out_item
+    if @item.purchase.present?
+      redirect_to action: :index
+    end
   end
 end

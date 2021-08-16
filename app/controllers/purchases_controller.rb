@@ -1,5 +1,8 @@
 class PurchasesController < ApplicationController
   before_action :set_item, only: [:index, :create]
+  before_action :move_to_signed_in, only: [:index, :create]
+  before_action :move_to_index, only: [:index, :create]
+  before_action :sold_out_item, only: [:index, :create]
 
   def index
     @purchase_ship_address = PurchaseShipAddress.new
@@ -33,5 +36,23 @@ class PurchasesController < ApplicationController
       card: purchase_params[:token],
       currency: 'jpy'
     )
+  end
+
+  def move_to_signed_in
+    unless user_signed_in?
+      redirect_to '/users/sign_in'
+    end
+  end
+  
+  def move_to_index
+    if current_user.id == @item.user.id
+      redirect_to root_path
+    end
+  end
+
+  def sold_out_item
+    if @item.purchase.present?
+      redirect_to root_path
+    end
   end
 end
