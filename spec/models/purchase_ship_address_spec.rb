@@ -113,6 +113,12 @@ RSpec.describe PurchaseShipAddress, type: :model do
         @purchase_ship_address.valid?
         expect(@purchase_ship_address.errors.full_messages).to include("Phone number is invalid. Input 10 or 11 half-width characters (not include hyphen(-)).")
       end  
+
+      it 'トークンが空では登録できないこと' do
+        @purchase_ship_address.token = nil
+        @purchase_ship_address.valid?
+        expect(@purchase_ship_address.errors.full_messages).to include("Token can't be blank")
+      end  
     end
   end
 end
