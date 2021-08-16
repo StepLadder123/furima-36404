@@ -8,6 +8,8 @@ class PurchaseShipAddress
     validates :city
     validates :address
     validates :phone_number, format: {with: /\A[0-9]{10,11}+\z/, message: "is invalid. Input 10 or 11 half-width characters (not include hyphen(-))."}
+    validates :user_id
+    validates :item_id
     validates :token
   end
 
