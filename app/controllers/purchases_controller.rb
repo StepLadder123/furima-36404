@@ -5,7 +5,6 @@ class PurchasesController < ApplicationController
   end
   def create
     @purchase_ship_address = PurchaseShipAddress.new(purchase_params)
-    binding.pry
     if @purchase_ship_address.valid?
       @purchase_ship_address.save
       redirect_to root_path
