@@ -9,9 +9,12 @@ class PurchasesController < ApplicationController
   
   def create
     @purchase_ship_address = PurchaseShipAddress.new(purchase_params)
+    user = User.find(@item.user_id)
     if @purchase_ship_address.valid?
       pay_item
       @purchase_ship_address.save
+      user.sell_count += 1
+      user.save
       redirect_to root_path
     else
       render :index
