@@ -85,6 +85,20 @@
   font-weight: bold;
 }
 
+.user-nickname-gold {
+  text-decoration: none;
+  margin-right: 3vw;
+  color: gold;
+  font-weight: bold;
+}
+
+.user-nickname-silver {
+  text-decoration: none;
+  margin-right: 3vw;
+  color: silver;
+  font-weight: bold;
+}
+
 
 .logout {
   text-decoration: none;
