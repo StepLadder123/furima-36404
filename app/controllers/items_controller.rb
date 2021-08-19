@@ -9,6 +9,7 @@ class ItemsController < ApplicationController
 
   def new
     @item = Item.new
+    gon.currentUserSellCount = current_user.sell_count
   end
 
   def create
