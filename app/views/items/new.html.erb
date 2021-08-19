@@ -100,7 +100,13 @@
           <%= f.text_field :price, class:"price-input", id:"item-price", placeholder:"例）300" %>
         </div>
         <div class="price-content">
-          <span>販売手数料 (10%)</span>
+          <% if current_user.sell_count >= 5 %>
+            <span>販売手数料 (Gold会員は5%！)</span>
+          <% elsif current_user.sell_count >= 3 %>
+            <span>販売手数料 (Silver会員は8%！)</span>
+          <% else %>
+            <span>販売手数料 (10%)</span>
+          <% end %>
           <span>
             <span id='add-tax-price'></span>円
           </span>
