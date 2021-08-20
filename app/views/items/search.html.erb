@@ -1,0 +1,59 @@
+<div class="items-search-contents">
+  <header class="items-search-header">
+    <%= link_to image_tag('furima-logo-color.png' , size: '185x50'), "/" %>
+  </header>
+  <div class="items-search-main">
+    <h2 class="items-search-title">商品検索</h2>
+    <%= search_form_for @i, url: search_result_items_path do |f| %>
+    <%# 商品名 %>
+    <div class="items-name">
+      <div class="weight-bold-text">
+        <%= f.label :name_cont, '商品名' %>
+      </div>
+      <%= f.text_area :name_cont, class:"items-text", id:"item-name", placeholder:"商品名を入力する", maxlength:"40" %>
+    </div>
+    <%# /商品名 %>
+    <%# カテゴリー %>
+    <div class="items-category">
+      <div class="weight-bold-text">
+        <%= f.label :category_id_eq, 'カテゴリー' %>
+      </div>
+      <%= f.collection_select :category_id_eq, Category.where.not(id: 1), :id, :name,  include_blank: '指定なし', class:"select-box", id:"item-category" %>
+    </div>
+    <%# /カテゴリー %>
+    <%# 商品の状態 %>
+    <div class="items-status">
+      <div class="weight-bold-text">
+        <%= f.label :status_id_eq, '商品の状態' %>
+      </div>
+      <%= f.collection_select :status_id_eq, Status.where.not(id: 1), :id, :name,  include_blank: '指定なし', class:"select-box", id:"item-sales-status" %>
+    </div>
+    <%# /商品の状態 %>
+    <%# 配送料の負担 %>
+    <div class="items-ship-fee">
+      <div class="weight-bold-text">
+        <%= f.label :ship_fee_id_eq, '配送料の負担' %>
+      </div>
+      <%= f.collection_select :ship_fee_id_eq, ShipFee.where.not(id: 1), :id, :name,  include_blank: '指定なし', class:"select-box", id:"item-shipping-fee-status" %>
+    </div>
+    <%# /配送料の負担 %>
+    <%# 金額 %>
+    <div class="items-price">
+      <div class="weight-bold-text">
+        <%= f.label :price_lteq, '金額' %>
+      </div>
+      <div class="price-input-area">
+      <%= f.text_field :price_lteq, class: "price-input-max" %>
+      <span>円以下</span>
+      </div>
+    </div>
+    <%# /金額 %>
+    <%# 下部ボタン %>
+    <div class="search-btn-contents">
+      <%= f.submit "検索", class: "search-btn" %>
+      <%=link_to 'もどる', root_path, class:"back-btn" %>
+    </div>
+    <%# /下部ボタン %>
+    <% end %>
+  </div>
+<%= render "shared/second-footer" %>
