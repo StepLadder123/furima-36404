@@ -8,6 +8,7 @@ class Item < ApplicationRecord
   belongs_to :ship_schedule
   has_one_attached :image
   has_one :purchase
+  has_many :comments
 
   with_options presence: true do
     validates :image

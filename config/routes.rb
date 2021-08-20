@@ -8,5 +8,6 @@ Rails.application.routes.draw do
       get 'search'
       get 'search_result'
     end
+    resources :comments, only: :create
   end
 end
